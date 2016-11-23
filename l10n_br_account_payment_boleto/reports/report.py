@@ -56,7 +56,7 @@ class report_custom(report_int):
         if active_model == 'account.invoice':
             ai_obj = pool.get('account.invoice')
             for account_invoice in ai_obj.browse(cr, uid, active_ids):
-                for move_line in account_invoice.move_line_receivable_id:
+                for move_line in account_invoice.move_lines:
                     ids_move_lines.append(move_line.id)
         elif active_model == 'account.move.line':
             ids_move_lines = active_ids
