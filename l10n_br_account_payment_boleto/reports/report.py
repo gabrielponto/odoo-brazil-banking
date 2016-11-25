@@ -42,7 +42,6 @@ class report_custom(report_int):
     """
         Custom report for return boletos
     """
-
     def create(self, cr, uid, ids, datas, context=False):
         if not context:
             context = {}
@@ -65,7 +64,10 @@ class report_custom(report_int):
             ids_move_lines = active_ids
         else:
             return False
-        boleto_list = aml_obj.send_payment(cr, uid, ids_move_lines)
+        try:
+            boleto_list = aml_obj.send_payment(cr, uid, ids_move_lines)
+        except BoletoException as b:
+            raise osv.except_osv('Erro', b.message)
         if not boleto_list:
             raise osv.except_osv(
                 'Error !', ('Não é possível gerar os boletos\n'
