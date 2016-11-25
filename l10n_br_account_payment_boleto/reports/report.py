@@ -57,9 +57,9 @@ class report_custom(report_int):
             ai_obj = pool.get('account.invoice')
             for account_invoice in ai_obj.browse(cr, uid, active_ids):
                 for move_line in account_invoice.move_id.line_id:
-					if move_line.date_maturity:
-						if not move_line.payment_mode_id or not move_line.payment_mode_id.type_payment:
-							raise osv.except_osv('Erro', u'Modo de pagamento não definido ou Tipo de Pagamento não definido no Modo de Pagamento')
+                    if move_line.date_maturity:
+                        if not move_line.payment_mode_id or not move_line.payment_mode_id.type_payment:
+                            raise osv.except_osv('Erro', u'Modo de pagamento não definido ou Tipo de Pagamento não definido no Modo de Pagamento')
                         ids_move_lines.append(move_line.id)
         elif active_model == 'account.move.line':
             ids_move_lines = active_ids
