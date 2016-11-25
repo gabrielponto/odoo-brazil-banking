@@ -56,13 +56,13 @@ class report_custom(report_int):
         if active_model == 'account.invoice':
             ai_obj = pool.get('account.invoice')
             for account_invoice in ai_obj.browse(cr, uid, active_ids):
-                for move_line in account_invoice.move_lines:
-                    ids_move_lines.append(move_line.id)
+                for move_line in account_invoice.move_id.line_id:
+		    if move_line.date_maturity:
+                        ids_move_lines.append(move_line.id)
         elif active_model == 'account.move.line':
             ids_move_lines = active_ids
         else:
             return False
-
         boleto_list = aml_obj.send_payment(cr, uid, ids_move_lines)
         if not boleto_list:
             raise osv.except_osv(

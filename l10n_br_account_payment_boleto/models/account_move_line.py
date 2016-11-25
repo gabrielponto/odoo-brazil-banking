@@ -69,9 +69,11 @@ class AccountMoveLine(models.Model):
 
                     boleto_list.append(boleto.boleto)
             except BoletoException as be:
-                _logger.error(be.message or be.value, exc_info=True)
+                #_logger.error(be.message or be.value, exc_info=True)
+		raise
                 continue
             except Exception as e:
-                _logger.error(e.message or e.value, exc_info=True)
+	        #_logger.error(e.message or e.value, exc_info=True)
+		raise
                 continue
         return boleto_list

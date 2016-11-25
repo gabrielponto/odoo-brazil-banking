@@ -101,8 +101,14 @@ class Boleto:
         :param company:
         :return:
         """
-        self.boleto.cedente = company.partner_id.legal_name.encode('utf-8')
-        self.boleto.cedente_documento = company.cnpj_cpf.encode('utf-8')
+	legal_name = company.partner_id.legal_name
+	if not legal_name:
+	    legal_name = ''
+	cnpj_cpf = company.cnpj_cpf
+	if not cnpj_cpf:
+	    cnpj_cpf = ''
+        self.boleto.cedente = legal_name.encode('utf-8')
+        self.boleto.cedente_documento = cnpj_cpf.encode('utf-8')
         self.boleto.cedente_bairro = company.district
         self.boleto.cedente_cep = company.zip
         self.boleto.cedente_cidade = company.city
